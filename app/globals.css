@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@theme {
+  /* Steel greys — the base of the whole palette */
+  --color-steel-50: #f6f7f9;
+  --color-steel-100: #eceef2;
+  --color-steel-200: #d5d9e0;
+  --color-steel-300: #b0b7c3;
+  --color-steel-400: #848e9f;
+  /* Lightened from a true mid-grey so muted text still clears 4.5:1 on the dark shell */
+  --color-steel-500: #7d8698;
+  --color-steel-600: #51596b;
+  --color-steel-700: #424857;
+  --color-steel-800: #2a2f3a;
+  --color-steel-900: #1a1e26;
+  --color-steel-950: #0f1218;
+
+  /* Molten amber — the accent, taken from hot steel */
+  --color-ember-300: #fcd34d;
+  --color-ember-400: #fbbf24;
+  --color-ember-500: #f59e0b;
+  --color-ember-600: #d97706;
+  --color-ember-700: #b45309;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-spark: spark 3.5s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes spark {
+  0%, 100% { opacity: 0.35; transform: translateY(0) scale(1); }
+  50% { opacity: 0.9; transform: translateY(-6px) scale(1.15); }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Sticky header height + breathing room, so anchors never land under the bar */
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-steel-950);
+    color: var(--color-steel-100);
+    font-feature-settings: "cv02", "cv03", "cv04";
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-ember-500);
+    color: var(--color-steel-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember-400);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* A restrained scrollbar that matches the dark shell */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-steel-950); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-steel-700);
+    border-radius: 999px;
+    border: 2px solid var(--color-steel-950);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-steel-600); }
+}
+
+@layer components {
+  /* Faint engineering-drawing grid used behind dark sections */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Brushed-metal sheen for headings and dividers */
+  .text-brushed {
+    background: linear-gradient(180deg, #ffffff 0%, #d5d9e0 55%, #848e9f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hairline {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(245, 158, 11, 0.55) 25%,
+      rgba(245, 158, 11, 0.55) 75%,
+      transparent
+    );
+  }
+}
+
+/* Scroll-reveal: opt-in, and completely bypassed for reduced-motion users */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
