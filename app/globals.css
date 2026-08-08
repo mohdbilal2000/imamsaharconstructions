@@ -1,115 +1,114 @@
 @import "tailwindcss";
 
 @theme {
-  /* Steel greys — the base of the whole palette */
-  --color-steel-50: #f6f7f9;
-  --color-steel-100: #eceef2;
-  --color-steel-200: #d5d9e0;
-  --color-steel-300: #b0b7c3;
-  --color-steel-400: #848e9f;
-  /* Lightened from a true mid-grey so muted text still clears 4.5:1 on the dark shell */
-  --color-steel-500: #7d8698;
-  --color-steel-600: #51596b;
-  --color-steel-700: #424857;
-  --color-steel-800: #2a2f3a;
-  --color-steel-900: #1a1e26;
-  --color-steel-950: #0f1218;
+  /* Paper & ink — a warm concrete palette, not a blue-grey one */
+  --color-paper: #f4f1ec;
+  --color-paper-2: #eae5dd;
+  --color-surface: #ffffff;
+  --color-ink: #17140f;
+  --color-ink-2: #3a342c;
+  --color-muted: #6e6559;
+  --color-line: #ded7cc;
+  --color-line-strong: #c9c0b2;
 
-  /* Molten amber — the accent, taken from hot steel */
-  --color-ember-300: #fcd34d;
-  --color-ember-400: #fbbf24;
-  --color-ember-500: #f59e0b;
-  --color-ember-600: #d97706;
-  --color-ember-700: #b45309;
+  /* Molten rust — hot steel, used sparingly and always deliberately.
+     Three steps because one orange cannot clear 4.5:1 on both paper and ink:
+     `rust` fills and large display type, `rust-dark` small text on paper,
+     `rust-light` small text on ink. */
+  --color-rust: #c93f0a;
+  --color-rust-dark: #a13207;
+  --color-rust-light: #ef8354;
+  --color-rust-tint: #f7e7de;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
 
-  --animate-marquee: marquee 32s linear infinite;
-  --animate-spark: spark 3.5s ease-in-out infinite;
+  --animate-ticker: ticker 40s linear infinite;
 }
 
-@keyframes marquee {
+@keyframes ticker {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
-}
-
-@keyframes spark {
-  0%, 100% { opacity: 0.35; transform: translateY(0) scale(1); }
-  50% { opacity: 0.9; transform: translateY(-6px) scale(1.15); }
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Sticky header height + breathing room, so anchors never land under the bar */
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 6rem;
     -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    background-color: var(--color-steel-950);
-    color: var(--color-steel-100);
-    font-feature-settings: "cv02", "cv03", "cv04";
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
   }
 
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+
   ::selection {
-    background-color: var(--color-ember-500);
-    color: var(--color-steel-950);
+    background-color: var(--color-ink);
+    color: var(--color-paper);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-ember-400);
+    outline: 2px solid var(--color-rust);
     outline-offset: 3px;
-    border-radius: 4px;
   }
-
-  /* A restrained scrollbar that matches the dark shell */
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: var(--color-steel-950); }
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-steel-700);
-    border-radius: 999px;
-    border: 2px solid var(--color-steel-950);
-  }
-  ::-webkit-scrollbar-thumb:hover { background: var(--color-steel-600); }
 }
 
 @layer components {
-  /* Faint engineering-drawing grid used behind dark sections */
-  .bg-grid {
+  /* Mono spec label — the technical voice of the design system */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* Tabular figures so stacked numbers align on their columns */
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  /* Faint blueprint grid for paper sections */
+  .bg-blueprint {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-    background-size: 56px 56px;
+      linear-gradient(to right, rgba(23, 20, 15, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(23, 20, 15, 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
   }
 
-  /* Brushed-metal sheen for headings and dividers */
-  .text-brushed {
-    background: linear-gradient(180deg, #ffffff 0%, #d5d9e0 55%, #848e9f 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  /* Underline that draws itself on hover — used on editorial links */
+  .link-rule {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
-
-  .hairline {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(245, 158, 11, 0.55) 25%,
-      rgba(245, 158, 11, 0.55) 75%,
-      transparent
-    );
+  .link-rule:hover {
+    background-size: 100% 1px;
   }
 }
 
-/* Scroll-reveal: opt-in, and completely bypassed for reduced-motion users */
+/* Scroll reveal — opt-in, and fully bypassed for reduced-motion users */
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.is-visible {

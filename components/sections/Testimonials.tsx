@@ -1,44 +1,29 @@
 import Reveal from "../Reveal";
-import { SectionHeading, Stars } from "../ui";
+import { Eyebrow, Stars } from "../ui";
 import { testimonials } from "@/lib/content";
 
-export default function Testimonials() {
+export default function Testimonials({ eyebrow = "06 — Reviews" }: { eyebrow?: string }) {
   return (
-    <section id="reviews" className="relative scroll-mt-24 py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <SectionHeading
-          eyebrow="Reviews"
-          title={
-            <>
-              What Jaipur customers <span className="text-ember-400">say</span>
-            </>
-          }
-        />
+    <section id="reviews" className="scroll-mt-24 border-t border-line bg-paper py-20 lg:py-28">
+      <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <h2 className="mt-7 max-w-2xl text-balance text-4xl sm:text-5xl lg:text-[3.5rem]">
+          What Jaipur customers say.
+        </h2>
 
-        <div className="mt-14 grid gap-5 md:grid-cols-2">
+        <div className="mt-16 grid gap-px bg-line sm:grid-cols-2">
           {testimonials.map((t, i) => (
             <Reveal key={t.name} delay={(i % 2) * 80} as="figure">
-              <div className="relative h-full rounded-2xl border border-white/10 bg-linear-to-b from-steel-800/50 to-steel-900/60 p-7">
-                <span
-                  className="absolute right-6 top-4 select-none font-serif text-6xl leading-none text-ember-500/15"
-                  aria-hidden="true"
-                >
-                  &rdquo;
-                </span>
-
+              <div className="flex h-full flex-col bg-paper p-8 sm:p-10">
                 <Stars />
-                <blockquote className="mt-4 text-pretty text-[15px] leading-relaxed text-steel-200">
-                  {t.quote}
+                <blockquote className="mt-6 flex-1 text-pretty font-display text-lg font-semibold leading-snug tracking-tight text-ink sm:text-xl">
+                  “{t.quote}”
                 </blockquote>
-
-                <figcaption className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-full bg-linear-to-br from-ember-400 to-ember-600 text-sm font-extrabold text-steel-950">
-                    {t.name.charAt(0)}
+                <figcaption className="mt-8 flex items-baseline justify-between gap-4 border-t border-line pt-5">
+                  <span className="font-display text-sm font-bold uppercase tracking-wide text-ink">
+                    {t.name}
                   </span>
-                  <span>
-                    <span className="block text-sm font-bold text-white">{t.name}</span>
-                    <span className="block text-xs text-steel-500">{t.place}</span>
-                  </span>
+                  <span className="label text-[10px] text-muted">{t.place}</span>
                 </figcaption>
               </div>
             </Reveal>

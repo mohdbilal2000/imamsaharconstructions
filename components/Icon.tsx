@@ -15,6 +15,7 @@ type IconName =
   | "shield"
   | "wrench"
   | "spark"
+  | "plus"
   | "chevron";
 
 const paths: Record<IconName, React.JSX.Element> = {
@@ -53,6 +54,7 @@ const paths: Record<IconName, React.JSX.Element> = {
   menu: <path d="M3.5 7h17M3.5 12h17M3.5 17h17" />,
   close: <path d="m5.5 5.5 13 13m0-13-13 13" />,
   chevron: <path d="m6.5 9.5 5.5 5.5 5.5-5.5" />,
+  plus: <path d="M12 5v14M5 12h14" />,
   hammer: (
     <>
       <path d="m13.4 7.6 3-3 1.6 1.6 2.6-2.6-4.2-1.4-3.8 2.2" />

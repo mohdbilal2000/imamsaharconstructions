@@ -1,39 +1,45 @@
-import Icon from "../Icon";
 import Reveal from "../Reveal";
-import { SectionHeading } from "../ui";
+import { Eyebrow } from "../ui";
 import { reasons } from "@/lib/content";
 
-type ReasonIcon = "hammer" | "receipt" | "team" | "shield" | "clock" | "wrench";
-
-export default function WhyUs() {
+export default function WhyUs({ eyebrow = "05 — Why us" }: { eyebrow?: string }) {
   return (
-    <section id="why-us" className="relative scroll-mt-24 overflow-hidden border-y border-white/10 bg-steel-900/40 py-20 lg:py-28">
-      <div className="bg-grid pointer-events-none absolute inset-0 opacity-50" />
-      <div className="pointer-events-none absolute left-1/2 top-0 size-[38rem] -translate-x-1/2 rounded-full bg-ember-600/8 blur-[130px]" />
+    <section id="why-us" className="scroll-mt-24 border-t border-line bg-paper py-20 lg:py-28">
+      <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
+          {/* Heading parks itself while the list scrolls past */}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-32">
+              <Eyebrow>{eyebrow}</Eyebrow>
+              <h2 className="mt-7 text-balance text-4xl sm:text-5xl lg:text-[3.5rem]">
+                The reason people call us back.
+              </h2>
+              <p className="mt-6 max-w-md text-pretty text-[15px] leading-relaxed text-muted">
+                Fabrication is easy to promise and hard to finish. Here is what we actually hold
+                ourselves to.
+              </p>
+            </div>
+          </div>
 
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-6">
-        <SectionHeading
-          eyebrow="Why us"
-          title={
-            <>
-              The reason people call us <span className="text-ember-400">back</span>
-            </>
-          }
-          subtitle="Fabrication is easy to promise and hard to finish. Here is what we actually hold ourselves to."
-        />
-
-        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {reasons.map((r, i) => (
-            <Reveal key={r.title} delay={(i % 3) * 80} as="article">
-              <div className="group h-full rounded-2xl border border-white/10 bg-steel-950/50 p-7 backdrop-blur-sm transition-all duration-300 hover:border-ember-500/30 hover:bg-steel-950/80">
-                <span className="inline-grid size-12 place-items-center rounded-xl border border-ember-500/20 bg-ember-500/10 text-ember-400 transition-transform duration-300 group-hover:scale-110">
-                  <Icon name={r.icon as ReasonIcon} className="size-6" />
-                </span>
-                <h3 className="mt-5 text-lg font-bold tracking-tight text-white">{r.title}</h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-steel-400">{r.desc}</p>
-              </div>
-            </Reveal>
-          ))}
+          <div className="lg:col-span-7">
+            <ul className="border-t border-line">
+              {reasons.map((r, i) => (
+                <Reveal key={r.title} delay={(i % 3) * 60} as="li">
+                  <div className="group grid grid-cols-[2.5rem_1fr] gap-x-5 border-b border-line py-7 transition-colors hover:bg-paper-2/60 sm:grid-cols-[3.5rem_1fr] sm:py-8">
+                    <span className="num pt-1 text-[11px] text-muted transition-colors group-hover:text-rust-dark">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="text-xl text-ink sm:text-2xl">{r.title}</h3>
+                      <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-muted sm:text-[15px]">
+                        {r.desc}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

@@ -1,22 +1,15 @@
+import type { StaticImageData } from "next/image";
+import { img } from "./images";
+
 export type Service = {
   slug: string;
   title: string;
   titleHi: string;
   blurb: string;
   points: string[];
-  /** Key of the SVG motif drawn on the card — see components/Motif.tsx */
-  motif: MotifKey;
+  image: StaticImageData;
+  alt: string;
 };
-
-export type MotifKey =
-  | "gate"
-  | "grill"
-  | "railing"
-  | "shed"
-  | "shutter"
-  | "staircase"
-  | "door"
-  | "structure";
 
 export const services: Service[] = [
   {
@@ -26,7 +19,8 @@ export const services: Service[] = [
     blurb:
       "Heavy-duty main gates built to your opening size — swing, sliding or folding, in MS, SS or wrought iron.",
     points: ["Custom designs", "Smooth roller tracks", "Anti-rust primer + paint"],
-    motif: "gate",
+    image: img.svcGates,
+    alt: "Ornate wrought iron main gate between stone pillars",
   },
   {
     slug: "grills",
@@ -35,7 +29,8 @@ export const services: Service[] = [
     blurb:
       "Strong, good-looking window grills and balcony jaali that keep the house safe without blocking the light.",
     points: ["Designer & plain patterns", "Exact on-site measurement", "Powder coating option"],
-    motif: "grill",
+    image: img.svcGrills,
+    alt: "Decorative wrought iron window grille on a brick wall",
   },
   {
     slug: "railings",
@@ -44,7 +39,8 @@ export const services: Service[] = [
     blurb:
       "Stainless steel and MS railings with glass or rod infill — clean welds, smooth buffing, level finish.",
     points: ["SS 202 / 304 grade", "Glass & rod infill", "Mirror or matte polish"],
-    motif: "railing",
+    image: img.svcRailings,
+    alt: "Minimal steel railing running alongside a concrete staircase",
   },
   {
     slug: "sheds",
@@ -53,7 +49,8 @@ export const services: Service[] = [
     blurb:
       "Parking sheds, terrace covers and factory roofing in tin, polycarbonate or profile sheet on a steel frame.",
     points: ["Truss & purlin work", "Leak-proof sheeting", "Wind-load safe design"],
-    motif: "shed",
+    image: img.svcSheds,
+    alt: "Steel roofing structure seen from below",
   },
   {
     slug: "shutters",
@@ -62,7 +59,8 @@ export const services: Service[] = [
     blurb:
       "Manual and motorised rolling shutters for shops, godowns and garages, plus complete shop front fabrication.",
     points: ["Manual & automatic", "Gear + spring balancing", "On-call servicing"],
-    motif: "shutter",
+    image: img.svcShutters,
+    alt: "Collapsible steel security shutter across a shop front",
   },
   {
     slug: "staircase",
@@ -71,7 +69,8 @@ export const services: Service[] = [
     blurb:
       "Space-saving spiral and straight steel staircases with chequered plate, wooden or glass treads.",
     points: ["Spiral & straight flights", "Chequered / wood treads", "Site assembled"],
-    motif: "staircase",
+    image: img.svcStaircase,
+    alt: "Spiral steel staircase photographed from above",
   },
   {
     slug: "doors",
@@ -80,7 +79,8 @@ export const services: Service[] = [
     blurb:
       "MS and GI doors, chowkhat frames and safety doors for homes, shops, terraces and meter rooms.",
     points: ["Fire-exit & safety doors", "Perfect frame alignment", "Lock & hinge fitting"],
-    motif: "door",
+    image: img.svcDoors,
+    alt: "Ornate metal door with decorative ironwork panels",
   },
   {
     slug: "structures",
@@ -89,7 +89,8 @@ export const services: Service[] = [
     blurb:
       "Columns, beams, platforms, water-tank stands, ladders and any on-site welding or repair job.",
     points: ["Site welding & cutting", "Girder & platform work", "Repair + re-painting"],
-    motif: "structure",
+    image: img.svcStructures,
+    alt: "Painted steel structural framework against a dark sky",
   },
 ];
 
@@ -120,32 +121,26 @@ export const reasons = [
   {
     title: "20+ years on the tools",
     desc: "Gates, grills, sheds and industrial jobs across Jaipur — the hand is trained, not guessed.",
-    icon: "hammer",
   },
   {
     title: "Fixed price, in writing",
     desc: "The rate we quote is the rate you pay. Material grade and section are written on the estimate.",
-    icon: "receipt",
   },
   {
     title: "Our own fitting team",
     desc: "No handing you off to a third-party fitter. The people who build it are the people who fit it.",
-    icon: "team",
   },
   {
     title: "Rust-proof finish",
     desc: "Every job is de-scaled, red-oxide primed and finish painted — so it survives Jaipur summers and rain.",
-    icon: "shield",
   },
   {
     title: "On-time delivery",
     desc: "A committed date on the estimate, and a call from us the day before fitting.",
-    icon: "clock",
   },
   {
     title: "After-work support",
     desc: "Hinge sagging, shutter jam, a weld that needs a touch-up — one call and we are there.",
-    icon: "wrench",
   },
 ];
 
@@ -200,5 +195,96 @@ export const faqs = [
   {
     q: "Which areas do you cover?",
     a: "All of Jaipur. We work most often in Jagatpura, Malviya Nagar, Sitapura, Pratap Nagar, Tonk Road and Mansarovar, and we take jobs in nearby towns too.",
+  },
+];
+
+export type Work = {
+  title: string;
+  place: string;
+  meta: string;
+  image: StaticImageData;
+  alt: string;
+  /** Tiles that take a double row in the gallery grid */
+  tall?: boolean;
+};
+
+/**
+ * Order matters. The gallery grid is three columns of equal-height rows with
+ * dense auto-flow, so the double-height tiles have to sit at indices 0 and 5 for
+ * the ten tiles to tile without leaving holes — and the home page teaser shows
+ * the first five, which fills exactly two rows.
+ */
+export const works: Work[] = [
+  {
+    title: "Double-leaf main gate",
+    place: "Golden City, Jagatpura",
+    meta: "MS square pipe · 14 ft",
+    image: img.workGateDrive,
+    alt: "Wide iron driveway gate between brick pillars",
+    tall: true,
+  },
+  {
+    title: "Designer gate panel",
+    place: "Vrinda Garden",
+    meta: "Wrought iron · hand finished",
+    image: img.workGateDetail,
+    alt: "Close-up of an ornate wrought iron gate panel",
+  },
+  {
+    title: "Boundary railing & spears",
+    place: "Sitapura",
+    meta: "MS flat · 180 running ft",
+    image: img.workFence,
+    alt: "Black iron boundary fence with spear tops",
+  },
+  {
+    title: "Stairwell railing",
+    place: "Malviya Nagar",
+    meta: "3 floors · mirror polish",
+    image: img.workStairwell,
+    alt: "Steel railings running down a multi-floor stairwell",
+  },
+  {
+    title: "Balcony railing",
+    place: "Mansarovar",
+    meta: "SS 304 · matte finish",
+    image: img.workRailing,
+    alt: "Clean steel balcony railing against a white wall",
+  },
+  {
+    title: "Industrial space frame",
+    place: "Sitapura Industrial Area",
+    meta: "Truss work · site erected",
+    image: img.workSpaceframe,
+    alt: "Industrial steel space frame roof structure",
+    tall: true,
+  },
+  {
+    title: "Ornamental entry gate",
+    place: "Pratap Nagar",
+    meta: "Powder coated · 12 ft",
+    image: img.workGateWhite,
+    alt: "White ornamental iron entry gate",
+  },
+  {
+    title: "Terrace roofing frame",
+    place: "Jagatpura",
+    meta: "Profile sheet · 620 sq.ft",
+    image: img.workRoof,
+    alt: "Steel roofing frame with sheeting seen from below",
+  },
+  {
+    title: "Column & beam joint",
+    place: "Tonk Road",
+    meta: "Girder work · bolted joint",
+    image: img.workBeam,
+    alt: "Bolted structural steel beam and column joint",
+  },
+  {
+    title: "On-site welding & repair",
+    place: "Tonk Road",
+    meta: "Same-week turnaround",
+    image: img.workshopGrind,
+    alt: "Fabricator grinding a welded steel joint on site",
   },
 ];

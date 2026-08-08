@@ -1,6 +1,6 @@
 import Icon from "../Icon";
 import Reveal from "../Reveal";
-import { SectionHeading } from "../ui";
+import { Eyebrow } from "../ui";
 import { faqs } from "@/lib/content";
 
 const faqJsonLd = {
@@ -13,34 +13,43 @@ const faqJsonLd = {
   })),
 };
 
-export default function Faq() {
+export default function Faq({ eyebrow = "07 — FAQ" }: { eyebrow?: string }) {
   return (
-    <section id="faq" className="relative scroll-mt-24 border-t border-white/10 bg-steel-900/40 py-20 lg:py-28">
-      <div className="mx-auto max-w-3xl px-5 sm:px-6">
-        <SectionHeading
-          eyebrow="FAQ"
-          title={
-            <>
-              Questions we get <span className="text-ember-400">every week</span>
-            </>
-          }
-        />
+    <section id="faq" className="scroll-mt-24 border-t border-line bg-paper py-20 lg:py-28">
+      <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-4">
+            <Eyebrow>{eyebrow}</Eyebrow>
+            <h2 className="mt-7 text-balance text-4xl sm:text-5xl">
+              Questions we get every week.
+            </h2>
+          </div>
 
-        <div className="mt-12 space-y-3">
-          {faqs.map((f, i) => (
-            <Reveal key={f.q} delay={i * 50}>
-              {/* Native <details> — works with JS disabled and is screen-reader friendly */}
-              <details className="group rounded-2xl border border-white/10 bg-steel-950/60 transition-colors open:border-ember-500/30 open:bg-steel-950">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-[15px] font-bold text-white marker:hidden [&::-webkit-details-marker]:hidden">
-                  {f.q}
-                  <span className="grid size-8 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/5 text-steel-300 transition-all duration-300 group-open:rotate-180 group-open:border-ember-500/30 group-open:text-ember-400">
-                    <Icon name="chevron" className="size-4" strokeWidth={2.2} />
-                  </span>
-                </summary>
-                <p className="px-5 pb-5 text-sm leading-relaxed text-steel-400">{f.a}</p>
-              </details>
-            </Reveal>
-          ))}
+          <div className="lg:col-span-8">
+            {/* Native <details> — works with JS disabled and is screen-reader friendly */}
+            <div className="border-t border-line">
+              {faqs.map((f, i) => (
+                <Reveal key={f.q} delay={i * 40}>
+                  <details className="group border-b border-line">
+                    <summary className="flex cursor-pointer list-none items-start gap-5 py-6 marker:hidden [&::-webkit-details-marker]:hidden">
+                      <span className="num pt-1.5 text-[11px] text-muted transition-colors group-open:text-rust-dark">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="flex-1 font-display text-lg font-extrabold tracking-tight text-ink sm:text-xl">
+                        {f.q}
+                      </span>
+                      <span className="mt-1 shrink-0 text-muted transition-transform duration-300 group-open:rotate-45 group-open:text-rust-dark">
+                        <Icon name="plus" className="size-5" strokeWidth={1.8} />
+                      </span>
+                    </summary>
+                    <p className="max-w-2xl pb-7 pl-[2.75rem] text-[15px] leading-relaxed text-muted">
+                      {f.a}
+                    </p>
+                  </details>
+                </Reveal>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

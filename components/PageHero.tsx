@@ -13,25 +13,22 @@ export default function PageHero({
   breadcrumb: string;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-white/10">
-      <div className="bg-grid pointer-events-none absolute inset-0 opacity-60" />
-      <div className="pointer-events-none absolute -top-32 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-ember-600/12 blur-[120px]" />
-
-      <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:py-24">
-        <nav aria-label="Breadcrumb" className="mb-6 text-xs font-semibold text-steel-500">
-          <Link href="/" className="transition hover:text-ember-400">
+    <section className="bg-blueprint border-b border-line bg-paper">
+      <div className="mx-auto max-w-[88rem] px-5 py-16 sm:px-8 lg:py-24">
+        <nav aria-label="Breadcrumb" className="label mb-9 text-[10px] text-muted">
+          <Link href="/" className="transition-colors hover:text-rust-dark">
             Home
           </Link>
-          <span className="mx-2 text-steel-700">/</span>
-          <span className="text-steel-300">{breadcrumb}</span>
+          <span className="mx-2.5 text-line-strong">/</span>
+          <span className="text-ink">{breadcrumb}</span>
         </nav>
 
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="mt-5 max-w-3xl text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl">
+        <h1 className="mt-7 max-w-4xl text-balance text-[clamp(2.5rem,6.5vw,5rem)] leading-[0.95]">
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-steel-400">
+          <p className="mt-7 max-w-2xl text-pretty text-lg leading-relaxed text-muted">
             {subtitle}
           </p>
         )}

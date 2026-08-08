@@ -3,30 +3,28 @@ import Icon from "./Icon";
 
 /* ---------------------------------- Logo --------------------------------- */
 
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({ tone = "ink" }: { tone?: "ink" | "paper" }) {
+  const text = tone === "paper" ? "text-white" : "text-ink";
+  const sub = tone === "paper" ? "text-white/55" : "text-muted";
+
   return (
-    <Link
-      href="/"
-      className={`group flex items-center gap-3 ${className}`}
-      aria-label="Iron Rod Fabrication — home"
-    >
-      <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-xl bg-linear-to-br from-ember-400 to-ember-600 shadow-lg shadow-ember-600/25 ring-1 ring-white/20">
+    <Link href="/" className="group flex items-center gap-3" aria-label="Iron Rod Fabrication — home">
+      <span className="grid size-9 shrink-0 place-items-center bg-rust text-white">
         {/* Arched gate with bars — the shop's most recognisable product */}
-        <svg viewBox="0 0 24 24" className="size-6 text-steel-950" aria-hidden="true">
-          <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+        <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+          <g fill="none" stroke="currentColor" strokeLinecap="square">
             <path d="M4 19V9a8 8 0 0 1 16 0v10" strokeWidth="2" />
-            <path d="M2.5 19h19" strokeWidth="2" />
-            <path d="M12 4v15M8 6.2V19M16 6.2V19" strokeWidth="1.4" opacity=".85" />
-            <path d="M4.6 12h14.8" strokeWidth="1.4" opacity=".85" />
+            <path d="M2.5 19.5h19" strokeWidth="2" />
+            <path d="M12 3.5V19M8 5.6V19M16 5.6V19M4.6 12h14.8" strokeWidth="1.3" opacity=".9" />
           </g>
         </svg>
       </span>
       <span className="leading-none">
-        <span className="block text-[15px] font-extrabold tracking-tight text-white">
-          Iron Rod <span className="text-ember-400">Fabrication</span>
+        <span className={`block font-display text-[15px] font-extrabold tracking-tight ${text}`}>
+          IRON ROD FABRICATION
         </span>
-        <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.18em] text-steel-400">
-          Jagatpura, Jaipur
+        <span className={`label mt-1.5 block text-[9px] tracking-[0.22em] ${sub}`}>
+          Jagatpura · Jaipur
         </span>
       </span>
     </Link>
@@ -38,34 +36,32 @@ export function Logo({ className = "" }: { className?: string }) {
 type ButtonProps = {
   href: string;
   children: React.ReactNode;
-  variant?: "primary" | "ghost" | "outline";
+  variant?: "rust" | "ink" | "outline" | "paper";
   className?: string;
-  external?: boolean;
   icon?: React.ReactNode;
-  /** Rendered after the label — use for "next step" arrows */
   iconAfter?: React.ReactNode;
 };
 
 const variants = {
-  primary:
-    "bg-linear-to-b from-ember-400 to-ember-600 text-steel-950 shadow-lg shadow-ember-600/25 hover:shadow-xl hover:shadow-ember-600/35 hover:brightness-110 active:brightness-95",
-  outline:
-    "border border-steel-600 bg-steel-900/60 text-steel-100 backdrop-blur hover:border-ember-500/70 hover:bg-steel-800 hover:text-white",
-  ghost: "text-steel-200 hover:bg-white/5 hover:text-white",
+  rust: "bg-rust text-white hover:bg-rust-dark",
+  ink: "bg-ink text-paper hover:bg-ink-2",
+  paper: "bg-white text-ink hover:bg-paper-2",
+  outline: "border border-current text-ink hover:bg-ink hover:text-paper hover:border-ink",
 };
 
 export function Button({
   href,
   children,
-  variant = "primary",
+  variant = "rust",
   className = "",
-  external,
   icon,
   iconAfter,
 }: ButtonProps) {
-  const cls = `inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold tracking-tight transition-all duration-200 ${variants[variant]} ${className}`;
+  // Sharp corners throughout — the whole design language avoids soft radii
+  const cls = `group inline-flex items-center justify-center gap-2.5 px-6 py-4 font-display text-sm font-bold uppercase tracking-wide transition-colors duration-200 ${variants[variant]} ${className}`;
+  const isExternal = /^(https?:|tel:|mailto:)/.test(href);
 
-  if (external || href.startsWith("http") || href.startsWith("tel:") || href.startsWith("mailto:")) {
+  if (isExternal) {
     return (
       <a
         href={href}
@@ -90,10 +86,26 @@ export function Button({
 
 /* ------------------------------ Section parts ----------------------------- */
 
-export function Eyebrow({ children }: { children: React.ReactNode }) {
+/** Mono index label with a leading rule — the recurring section marker. */
+export function Eyebrow({
+  children,
+  tone = "ink",
+  className = "",
+}: {
+  children: React.ReactNode;
+  tone?: "ink" | "paper";
+  className?: string;
+}) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-ember-500/25 bg-ember-500/10 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-ember-300">
-      <span className="size-1.5 rounded-full bg-ember-400" />
+    <span
+      className={`label flex items-center gap-3 ${
+        tone === "paper" ? "text-white/60" : "text-rust-dark"
+      } ${className}`}
+    >
+      <span
+        className={`h-px w-8 ${tone === "paper" ? "bg-white/30" : "bg-rust/40"}`}
+        aria-hidden="true"
+      />
       {children}
     </span>
   );
@@ -103,21 +115,33 @@ export function SectionHeading({
   eyebrow,
   title,
   subtitle,
-  align = "center",
+  tone = "ink",
+  className = "",
 }: {
   eyebrow?: string;
   title: React.ReactNode;
   subtitle?: string;
-  align?: "center" | "left";
+  tone?: "ink" | "paper";
+  className?: string;
 }) {
   return (
-    <div className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
-      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      <h2 className="mt-5 text-balance text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]">
+    <div className={className}>
+      {eyebrow && <Eyebrow tone={tone}>{eyebrow}</Eyebrow>}
+      <h2
+        className={`mt-6 max-w-3xl text-balance text-4xl sm:text-5xl lg:text-[3.75rem] ${
+          tone === "paper" ? "text-white" : "text-ink"
+        }`}
+      >
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 text-pretty text-base leading-relaxed text-steel-400">{subtitle}</p>
+        <p
+          className={`mt-6 max-w-xl text-pretty text-base leading-relaxed ${
+            tone === "paper" ? "text-white/65" : "text-muted"
+          }`}
+        >
+          {subtitle}
+        </p>
       )}
     </div>
   );
@@ -125,10 +149,46 @@ export function SectionHeading({
 
 export function Stars({ className = "" }: { className?: string }) {
   return (
-    <span role="img" aria-label="5 out of 5 stars" className={`flex gap-0.5 text-ember-400 ${className}`}>
+    <span role="img" aria-label="5 out of 5 stars" className={`flex gap-1 text-rust ${className}`}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <Icon key={i} name="star" className="size-4 fill-ember-400" strokeWidth={1.2} />
+        <Icon key={i} name="star" className="size-3.5 fill-rust" strokeWidth={1} />
       ))}
     </span>
+  );
+}
+
+/** Editorial text link with an underline that draws in on hover. */
+export function TextLink({
+  href,
+  children,
+  tone = "ink",
+}: {
+  href: string;
+  children: React.ReactNode;
+  tone?: "ink" | "paper" | "rust";
+}) {
+  const colour =
+    tone === "paper" ? "text-white" : tone === "rust" ? "text-rust" : "text-ink";
+  const isExternal = /^(https?:|tel:|mailto:)/.test(href);
+  const cls = `link-rule inline-flex items-center gap-2 font-display text-sm font-bold uppercase tracking-wide ${colour}`;
+  const inner = (
+    <>
+      {children}
+      <Icon name="arrow" className="size-4" strokeWidth={2} />
+    </>
+  );
+
+  return isExternal ? (
+    <a
+      href={href}
+      className={cls}
+      {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      {inner}
+    </a>
+  ) : (
+    <Link href={href} className={cls}>
+      {inner}
+    </Link>
   );
 }

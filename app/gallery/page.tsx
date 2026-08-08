@@ -15,17 +15,17 @@ export default function GalleryPage() {
   return (
     <>
       <PageHero
-        breadcrumb="Our Work"
+        breadcrumb="Work"
         eyebrow="Portfolio"
         title={
           <>
-            Work that is still standing <span className="text-ember-400">years later</span>
+            Work that is still standing <span className="text-rust">years later.</span>
           </>
         }
         subtitle="A selection of jobs delivered around Jaipur. Want photos of something similar to your requirement? Message us on WhatsApp and we will send them."
       />
-      <Gallery />
-      <Testimonials />
+      <Gallery eyebrow="01 — Selected jobs" />
+      <Testimonials eyebrow="02 — Reviews" />
       <Cta />
     </>
   );

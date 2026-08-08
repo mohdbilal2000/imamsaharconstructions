@@ -40,12 +40,12 @@ export default function QuoteForm() {
   }
 
   const field =
-    "w-full rounded-xl border border-white/10 bg-steel-950/70 px-4 py-3.5 text-sm text-white placeholder:text-steel-500 transition focus:border-ember-500/60 focus:outline-none focus:ring-2 focus:ring-ember-500/25";
-  const label = "mb-2 block text-xs font-bold uppercase tracking-[0.12em] text-steel-400";
+    "w-full border border-line-strong bg-white px-4 py-3.5 text-[15px] text-ink transition-colors placeholder:text-muted focus:border-rust focus:outline-none";
+  const label = "label mb-2.5 block text-[10px] text-muted";
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
-      <div className="grid gap-5 sm:grid-cols-2">
+    <form onSubmit={handleSubmit} noValidate className="space-y-6">
+      <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="qf-name" className={label}>
             Your name
@@ -92,23 +92,21 @@ export default function QuoteForm() {
           className={`${field} appearance-none bg-[length:1.1rem] bg-[right_1rem_center] bg-no-repeat pr-11`}
           style={{
             backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23848e9f' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")",
+              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236e6559' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")",
           }}
         >
           {services.map((s) => (
-            <option key={s.slug} value={s.title} className="bg-steel-900">
+            <option key={s.slug} value={s.title}>
               {s.title}
             </option>
           ))}
-          <option value="Other fabrication work" className="bg-steel-900">
-            Other fabrication work
-          </option>
+          <option value="Other fabrication work">Other fabrication work</option>
         </select>
       </div>
 
       <div>
         <label htmlFor="qf-details" className={label}>
-          Details <span className="font-medium normal-case tracking-normal text-steel-500">(optional)</span>
+          Details <span className="normal-case tracking-normal text-muted">(optional)</span>
         </label>
         <textarea
           id="qf-details"
@@ -122,22 +120,22 @@ export default function QuoteForm() {
       </div>
 
       {error && (
-        <p role="alert" className="rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+        <p role="alert" className="border-l-2 border-rust bg-rust-tint px-4 py-3 text-sm text-rust-dark">
           {error}
         </p>
       )}
 
       <button
         type="submit"
-        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-b from-emerald-400 to-emerald-600 px-6 py-4 text-base font-bold text-steel-950 shadow-lg shadow-emerald-700/25 transition hover:brightness-110 active:brightness-95"
+        className="inline-flex w-full items-center justify-center gap-2.5 bg-ink px-6 py-4.5 font-display text-sm font-bold uppercase tracking-wide text-paper transition-colors hover:bg-rust"
       >
         <Icon name="whatsapp" className="size-5" strokeWidth={1.9} />
         Send enquiry on WhatsApp
       </button>
 
-      <p className="text-center text-xs leading-relaxed text-steel-500">
-        Opens WhatsApp with your details filled in. We usually reply within an hour during
-        working hours.
+      <p className="text-center text-[13px] leading-relaxed text-muted">
+        Opens WhatsApp with your details filled in. We usually reply within an hour during working
+        hours.
       </p>
     </form>
   );
